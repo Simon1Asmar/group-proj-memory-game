@@ -122,6 +122,7 @@ function reset() {
   openedCards.forEach(card => {
     card.classList.toggle("flipped");
   });
+  openedCards.length = 0;
 }
 
 function shuffle() {
