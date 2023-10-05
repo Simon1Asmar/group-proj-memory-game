@@ -11,7 +11,15 @@
 
 //Game Logic
 //Start Game function
-//Reset Game function
+function startNewGame(){
+  resizeTo();
+}
+// Reset Game 
+function reset(){
+  //calls the shuffle function
+
+}
+// function 
 //if guess (card1===card2) is correct freeze images add 1 to guesses
 //if wrong (card1!=card2) guesses add 1 to guesses and wrong guesses
 //game Over
