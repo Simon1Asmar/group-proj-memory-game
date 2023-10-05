@@ -43,13 +43,16 @@ function startNewGame() {
 function cardClickListener(event) {
   //check if click allowed
   if(isClickAllowed){
-    //gets data-name attribute of clicked target and sends it to function cardClicked
+    if (!clickedElements.includes(event.target.parentElement)) {
+      //gets data-name attribute of clicked target and sends it to function cardClicked
     clickedElements.push(event.target.parentElement);
     cardClicked(event.target.parentElement.getAttribute("data-name"));
   
     //FLIP CARD TRANSITION
     event.target.parentElement.classList.toggle("flipped");
     openedCards.push(event.target.parentElement);
+    }
+  
   }
 }
 
