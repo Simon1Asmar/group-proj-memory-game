@@ -9,6 +9,7 @@ console.log(memoryCards);
 
 let currentClickedCard1 = null;
 let currentClickedCard2 = null;
+const clickedElements = []
 let guessesCounter = 0;
 let correctGuessCounter = 0;
 let wrongGuessCounter = 0;
@@ -31,16 +32,18 @@ function startNewGame() {
 
   memoryCards.forEach((card) => {
     card.addEventListener("click", cardClickListener);
-    card.classList.toggle('flipped');
+  
   });
 }
 
 // listen for button clicks
 function cardClickListener(event) {
   //gets data-name attribute of clicked target and sends it to function cardClicked
+  clickedElements.push(event.target.parentElement)
   cardClicked(event.target.parentElement.getAttribute("data-name"));
 
   //FLIP CARD TRANSITION
+  event.target.parentElement.classList.toggle('flipped');  
 }
 
 function cardClicked(dataName) {
@@ -57,17 +60,34 @@ function cardClicked(dataName) {
     if (currentClickedCard1 === currentClickedCard2) {
       console.log("correct guesss");
       correctGuessCounter++;
+      clickedElements.length = 0
       // check if the game done
     } else {
       console.log("wrong guess");
       // wrong gesses innertext increase count
       wrongGuessCounter++;
       wrongGuesses.innerText = wrongGuessCounter;
+      // flip cards 
+      
+      
+      setTimeout(()=> {
+        flipCardsBack()
+        clickedElements.length = 0
+      },2000)
     }
 
     currentClickedCard1 = null;
     currentClickedCard2 = null;
+    // clickedElements.length = 0
+
   }
+}
+
+function flipCardsBack() {
+  clickedElements.forEach(card => {
+    card.classList.toggle('flipped');
+     
+  }) 
 }
 
 // Reset Game
