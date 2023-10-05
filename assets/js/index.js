@@ -31,6 +31,7 @@ function startNewGame() {
 
   memoryCards.forEach((card) => {
     card.addEventListener("click", cardClickListener);
+    card.classList.toggle('flipped');
   });
 }
 

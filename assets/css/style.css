@@ -101,3 +101,23 @@ h1 {
 .card-game-title {
     color: #2b6ec6;
 }
+
+
+.memory-card.flipped {
+transform: rotateY(180deg);
+  }
+
+.front-face,
+.back-face {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  object-fit: cover;
+  backface-visibility: hidden;
+  transition: transform 0.5s ease; 
+}
+
+
+
+
+
