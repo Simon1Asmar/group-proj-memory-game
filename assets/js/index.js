@@ -13,6 +13,9 @@ const clickedElements = [];
 let guessesCounter = 0;
 let correctGuessCounter = 0;
 let wrongGuessCounter = 0;
+const openedCards = []
+
+let isClickAllowed = true;
 
 startNewGame();
 resetButton.addEventListener("click", startNewGame);
@@ -30,7 +33,7 @@ resetButton.addEventListener("click", startNewGame);
 function startNewGame() {
   reset();
   // shuffle
-  shuffle()
+  shuffle();
   memoryCards.forEach((card) => {
     card.addEventListener("click", cardClickListener);
   });
@@ -38,12 +41,16 @@ function startNewGame() {
 
 // listen for button clicks
 function cardClickListener(event) {
-  //gets data-name attribute of clicked target and sends it to function cardClicked
-  clickedElements.push(event.target.parentElement);
-  cardClicked(event.target.parentElement.getAttribute("data-name"));
-
-  //FLIP CARD TRANSITION
-  event.target.parentElement.classList.toggle("flipped");
+  //check if click allowed
+  if(isClickAllowed){
+    //gets data-name attribute of clicked target and sends it to function cardClicked
+    clickedElements.push(event.target.parentElement);
+    cardClicked(event.target.parentElement.getAttribute("data-name"));
+  
+    //FLIP CARD TRANSITION
+    event.target.parentElement.classList.toggle("flipped");
+    openedCards.push(event.target.parentElement);
+  }
 }
 
 function cardClicked(dataName) {
@@ -72,11 +79,14 @@ function cardClicked(dataName) {
       wrongGuessCounter++;
       wrongGuesses.innerText = wrongGuessCounter;
 
-      // flip cards
-
+      //stop clicks
+      isClickAllowed = false;
+      
+      //flip cards after timeout and allow clicks
       setTimeout(() => {
         flipCardsBack();
         clickedElements.length = 0;
+        isClickAllowed = true;
       }, 2000);
     }
 
@@ -88,6 +98,7 @@ function cardClicked(dataName) {
 
 function flipCardsBack() {
   clickedElements.forEach((card) => {
+    openedCards.pop();
     card.classList.toggle("flipped");
   });
 }
@@ -103,13 +114,20 @@ function reset() {
   correctGuessCounter = 0;
   wrongGuessCounter = 0;
   wrongGuesses.innerText = wrongGuessCounter;
+
+  //close opened cards
+  openedCards.forEach(card => {
+    card.classList.toggle("flipped");
+  });
 }
+
 function shuffle() {
-    memoryCards.forEach(card => {
-    let randompos= Math.floor(Math.random()*12)
-    card.style.order=randompos
-    })
+  memoryCards.forEach((card) => {
+    let randompos = Math.floor(Math.random() * 12);
+    card.style.order = randompos;
+  });
 }
+
 // function
 //if guess (card1===card2) is correct freeze images add 1 to guesses
 //if wrong (card1!=card2) guesses add 1 to guesses and wrong guesses
