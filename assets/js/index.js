@@ -59,6 +59,10 @@ function cardClicked(dataName) {
     if (currentClickedCard1 === currentClickedCard2) {
       console.log("correct guesss");
       correctGuessCounter++;
+      //removing eventlisteners from card flipedcards
+      clickedElements.forEach((card) => {
+        card.removeEventListener("click", cardClickListener);
+      });
       clickedElements.length = 0;
       // check if the game done
     } else {
