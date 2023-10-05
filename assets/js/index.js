@@ -30,6 +30,7 @@ resetButton.addEventListener("click", startNewGame);
 function startNewGame() {
   reset();
   // shuffle
+  shuffle()
   memoryCards.forEach((card) => {
     card.addEventListener("click", cardClickListener);
   });
@@ -103,7 +104,12 @@ function reset() {
   wrongGuessCounter = 0;
   wrongGuesses.innerText = wrongGuessCounter;
 }
-
+function shuffle() {
+    memoryCards.forEach(card => {
+    let randompos= Math.floor(Math.random()*12)
+    card.style.order=randompos
+    })
+}
 // function
 //if guess (card1===card2) is correct freeze images add 1 to guesses
 //if wrong (card1!=card2) guesses add 1 to guesses and wrong guesses
