@@ -7,9 +7,11 @@ const resetButton = document.querySelector("#resetButton");
 const memoryCards = document.querySelectorAll(".memory-card");
 console.log(memoryCards);
 
-
-let currentClickedCard1 = null
-let currentClickedCard2 = null 
+let currentClickedCard1 = null;
+let currentClickedCard2 = null;
+let guessesCounter = 0;
+let correctGuessCounter = 0;
+let wrongGuessCounter = 0;
 
 startNewGame();
 
@@ -24,54 +26,55 @@ startNewGame();
 
 //Game Logic
 //Start Game function
-function startNewGame(){
+function startNewGame() {
   reset();
 
-  memoryCards.forEach((card)=>{
+  memoryCards.forEach((card) => {
     card.addEventListener("click", cardClickListener);
-  })  
+  });
 }
 
 // listen for button clicks
-function cardClickListener(event){
+function cardClickListener(event) {
   //gets data-name attribute of clicked target and sends it to function cardClicked
   cardClicked(event.target.parentElement.getAttribute("data-name"));
 
   //FLIP CARD TRANSITION
 }
 
-function cardClicked(dataName){
-  if(!currentClickedCard1){
+function cardClicked(dataName) {
+  if (!currentClickedCard1) {
     currentClickedCard1 = dataName;
-  } else if(!currentClickedCard2){
+  } else if (!currentClickedCard2) {
     currentClickedCard2 = dataName;
   }
 
-  if(currentClickedCard1!=null && currentClickedCard2!=null){
+  if (currentClickedCard1 != null && currentClickedCard2 != null) {
     // guesses inntertext increase count
-    if(currentClickedCard1 === currentClickedCard2){
+    guessesCounter++;
+    guesses.innerText = guessesCounter;
+    if (currentClickedCard1 === currentClickedCard2) {
       console.log("correct guesss");
-      //
+      correctGuessCounter++;
+      // check if the game done
     } else {
       console.log("wrong guess");
       // wrong gesses innertext increase count
+      wrongGuessCounter++;
+      wrongGuesses.innerText = wrongGuessCounter;
     }
 
     currentClickedCard1 = null;
     currentClickedCard2 = null;
-
-  } 
+  }
 }
 
-// Reset Game 
-function reset(){
+// Reset Game
+function reset() {
   //calls the shuffle function
-
 }
 
-
-
-// function 
+// function
 //if guess (card1===card2) is correct freeze images add 1 to guesses
 //if wrong (card1!=card2) guesses add 1 to guesses and wrong guesses
 //game Over
