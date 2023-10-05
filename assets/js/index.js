@@ -13,7 +13,7 @@ const clickedElements = [];
 let guessesCounter = 0;
 let correctGuessCounter = 0;
 let wrongGuessCounter = 0;
-const openedCards = []
+const openedCards = [];
 
 let isClickAllowed = true;
 
@@ -42,17 +42,16 @@ function startNewGame() {
 // listen for button clicks
 function cardClickListener(event) {
   //check if click allowed
-  if(isClickAllowed){
+  if (isClickAllowed) {
     if (!clickedElements.includes(event.target.parentElement)) {
       //gets data-name attribute of clicked target and sends it to function cardClicked
-    clickedElements.push(event.target.parentElement);
-    cardClicked(event.target.parentElement.getAttribute("data-name"));
-  
-    //FLIP CARD TRANSITION
-    event.target.parentElement.classList.toggle("flipped");
-    openedCards.push(event.target.parentElement);
+      clickedElements.push(event.target.parentElement);
+      cardClicked(event.target.parentElement.getAttribute("data-name"));
+
+      //FLIP CARD TRANSITION
+      event.target.parentElement.classList.toggle("flipped");
+      openedCards.push(event.target.parentElement);
     }
-  
   }
 }
 
@@ -76,6 +75,9 @@ function cardClicked(dataName) {
       });
       clickedElements.length = 0;
       // check if the game done
+      if (correctGuessCounter === 6) {
+        alert("Well Done");
+      }
     } else {
       console.log("wrong guess");
       // wrong gesses innertext increase count
@@ -84,7 +86,7 @@ function cardClicked(dataName) {
 
       //stop clicks
       isClickAllowed = false;
-      
+
       //flip cards after timeout and allow clicks
       setTimeout(() => {
         flipCardsBack();
@@ -119,7 +121,7 @@ function reset() {
   wrongGuesses.innerText = wrongGuessCounter;
 
   //close opened cards
-  openedCards.forEach(card => {
+  openedCards.forEach((card) => {
     card.classList.toggle("flipped");
   });
   openedCards.length = 0;
