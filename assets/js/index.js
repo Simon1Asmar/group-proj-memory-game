@@ -9,13 +9,13 @@ console.log(memoryCards);
 
 let currentClickedCard1 = null;
 let currentClickedCard2 = null;
-const clickedElements = []
+const clickedElements = [];
 let guessesCounter = 0;
 let correctGuessCounter = 0;
 let wrongGuessCounter = 0;
 
 startNewGame();
-
+resetButton.addEventListener("click", startNewGame);
 //Array of names of images (strings) (each name written twice)
 //function that takes an array of strings and shuffles and returns it
 
@@ -29,21 +29,20 @@ startNewGame();
 //Start Game function
 function startNewGame() {
   reset();
-
+  // shuffle
   memoryCards.forEach((card) => {
     card.addEventListener("click", cardClickListener);
-  
   });
 }
 
 // listen for button clicks
 function cardClickListener(event) {
   //gets data-name attribute of clicked target and sends it to function cardClicked
-  clickedElements.push(event.target.parentElement)
+  clickedElements.push(event.target.parentElement);
   cardClicked(event.target.parentElement.getAttribute("data-name"));
 
   //FLIP CARD TRANSITION
-  event.target.parentElement.classList.toggle('flipped');  
+  event.target.parentElement.classList.toggle("flipped");
 }
 
 function cardClicked(dataName) {
@@ -60,39 +59,45 @@ function cardClicked(dataName) {
     if (currentClickedCard1 === currentClickedCard2) {
       console.log("correct guesss");
       correctGuessCounter++;
-      clickedElements.length = 0
+      clickedElements.length = 0;
       // check if the game done
     } else {
       console.log("wrong guess");
       // wrong gesses innertext increase count
       wrongGuessCounter++;
       wrongGuesses.innerText = wrongGuessCounter;
-      // flip cards 
-      
-      
-      setTimeout(()=> {
-        flipCardsBack()
-        clickedElements.length = 0
-      },2000)
+
+      // flip cards
+
+      setTimeout(() => {
+        flipCardsBack();
+        clickedElements.length = 0;
+      }, 2000);
     }
 
     currentClickedCard1 = null;
     currentClickedCard2 = null;
     // clickedElements.length = 0
-
   }
 }
 
 function flipCardsBack() {
-  clickedElements.forEach(card => {
-    card.classList.toggle('flipped');
-     
-  }) 
+  clickedElements.forEach((card) => {
+    card.classList.toggle("flipped");
+  });
 }
 
 // Reset Game
+//calls the shuffle function
 function reset() {
-  //calls the shuffle function
+  currentClickedCard1 = null;
+  currentClickedCard2 = null;
+  clickedElements.length = 0;
+  guessesCounter = 0;
+  guesses.innerText = guessesCounter;
+  correctGuessCounter = 0;
+  wrongGuessCounter = 0;
+  wrongGuesses.innerText = wrongGuessCounter;
 }
 
 // function
